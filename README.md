@@ -20,7 +20,6 @@ Instuctions to run/test/examine the solution:
 
 6:- Once migrations are applied, Import and run test data script from /Decongestor/DataAccess/TestData/
 
-7:- Once one imported, Run the application to test/examine
-
+7:- Once test data is imported, Run the application to test/examine
 
 8:- Solution also contains unit tests project for the application.
