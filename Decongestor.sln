@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decongestor", "Decongestor\Decongestor.csproj", "{84C9CDDE-1882-4BA3-812E-5218F15A4408}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decongestor.Tests", "Decongestor.Tests\Decongestor.Tests.csproj", "{CCFFB578-287B-4F3B-BCE5-59B5D761EFDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84C9CDDE-1882-4BA3-812E-5218F15A4408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C9CDDE-1882-4BA3-812E-5218F15A4408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C9CDDE-1882-4BA3-812E-5218F15A4408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C9CDDE-1882-4BA3-812E-5218F15A4408}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCFFB578-287B-4F3B-BCE5-59B5D761EFDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCFFB578-287B-4F3B-BCE5-59B5D761EFDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCFFB578-287B-4F3B-BCE5-59B5D761EFDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCFFB578-287B-4F3B-BCE5-59B5D761EFDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D33AC7B7-74BC-4D7E-889F-B051F92871D7}
+	EndGlobalSection
+EndGlobal

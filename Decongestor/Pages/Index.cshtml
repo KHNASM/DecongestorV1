@@ -1,0 +1,78 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div>
+    <h1 class="display-4">Decongestor Test Harness</h1>
+
+    <br />
+
+    <div>
+        @foreach (var v in Model.Vehicles)
+        {
+            <div class="card my-4">
+                <div class="card-header">
+                    <table class="vehicle-table">
+                        <tr>
+                            <td class="label">Reg#:</td>
+                            <td class="value">@v.Id</td>
+                            <td class="label">Description:</td>
+                            <td class="value">@v.Description</td>
+                            <td class="label">Type:</td>
+                            <td class="value">@v.VehicleTypeDescription</td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="card-body">
+                    @if (v.TollEntries?.Length > 0)
+                    {
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    Charged At
+                                </th>
+                                <th>
+                                    Charge
+                                </th>
+                                <th>
+                                    Remarks
+                                </th>
+                            </tr>
+
+                            @foreach (var te in v.TollEntries)
+                            {
+                                <tr>
+                                    <td>
+                                        @te.EnteredAtUtc
+                                    </td>
+                                    <td>
+                                        @te.Charge
+                                    </td>
+                                    <td>
+                                        @te.Remarks
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="mb-4" style="font-size: 0.8em; font-style:italic; color:#888;">No Toll Charge records found</div>
+                    }
+
+
+                    <form method="post">
+                        <input type="hidden" value="@v.Id" name="id" />
+                        <input type="submit" class="btn btn-primary" value="Charge Toll Fee" />
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
