@@ -8,7 +8,7 @@ Note: The test solution is re-written completely, it is a data driven (to suppor
 
 Instuctions to run/test/examine the solution:
 
-1:- Open the Visual Studio Solution from the zip file 
+1:- Open the Visual Studio Solution .sln file 
 
 2:- Update the Nuget packages using package manager / package manager console ( PM> Update-Package)
 
