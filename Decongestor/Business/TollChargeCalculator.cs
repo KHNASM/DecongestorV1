@@ -83,7 +83,9 @@ namespace Decongestor.Business
             ChargeMatrix chargeMatrix = _dataAccess.GetChargeMatrix(vehicle.VehicleTypeId, entryDateTimeUtc);
             var charge = chargeMatrix?.ChargePerEntry;
 
-            if (!charge.HasValue)
+            // if charge matrix does not have any information or if it null, fallback to app configurations
+
+            if (!charge.HasValue) 
             {
                 TimeSpan timeOfDay = entryDateTimeLocal - entryDateTimeLocal.Date;
 

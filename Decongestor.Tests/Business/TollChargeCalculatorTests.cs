@@ -32,7 +32,6 @@ namespace Decongestor.Tests.Business
             _dateTimeHelperMock = new Mock<IDateTimeHelper>();
             _dateTimeHelperMock.Setup(m => m.UtcToLocalTime(It.IsAny<DateTime>())).Returns<DateTime>(d => d);
 
-
             _calculator = new TollChargeCalculator(_appSettingMonitorMock.Object, _dataAccessMock.Object, _dateTimeHelperMock.Object);
         }
 
@@ -40,10 +39,10 @@ namespace Decongestor.Tests.Business
         public void CalculateCharge_WhenTodayIsExemptedDay_ChargesZero()
         {
             // Arrange
-            ConfigureExemptDays(DayOfWeek.Monday, DayOfWeek.Tuesday);
+            ConfigureExemptDays(DayOfWeek.Saturday, DayOfWeek.Sunday);
 
             // Act
-            var date1 = DateTime.Parse("06/09/2021 12:00:00");
+            DateTime date1 = new(2021, 9, 4, 11, 0, 0); // regional setting/locale formats agnostic date initialization
             var date2 = date1.AddDays(1);
             var vehicleId = "XYZ9999";
 
@@ -52,10 +51,10 @@ namespace Decongestor.Tests.Business
 
             // Assert
             Assert.AreEqual(0, actual1.Charge, "Assertion on Charge failed.");
-            Assert.IsTrue(actual1.Remarks.Contains("Monday is exempted from Toll Charge"), "Assertion on remarks failed");
+            Assert.IsTrue(actual1.Remarks.Contains("Saturday is exempted from Toll Charge"), "Assertion on remarks failed");
 
             Assert.AreEqual(0, actual2.Charge, "Assertion on Charge failed.");
-            Assert.IsTrue(actual2.Remarks.Contains("Tuesday is exempted from Toll Charge"), "Assertion on remarks failed");
+            Assert.IsTrue(actual2.Remarks.Contains("Sunday is exempted from Toll Charge"), "Assertion on remarks failed");
         }
 
         [TestMethod]
@@ -65,7 +64,7 @@ namespace Decongestor.Tests.Business
             ConfigureExemptDays(DayOfWeek.Monday, DayOfWeek.Tuesday);
 
             // Act
-            var date1 = DateTime.Parse("06/09/2021 12:00:00");
+            var date1 = new DateTime(2021, 9, 6, 12, 0, 0);
 
             TollCharge actual = _calculator.CalculateCharge("XYZ9999", date1);
 
@@ -80,8 +79,8 @@ namespace Decongestor.Tests.Business
             ConfigureExemptDays();
             _dataAccessMock.Setup(m => m.IsHolidayOn(It.IsAny<DateTime>())).Returns(true);
 
-            var date = DateTime.Parse("07/09/2021 11:00:00");
-            
+            var date = new DateTime(2021, 9, 7, 11, 0, 0);
+
             // Act
             TollCharge actual = _calculator.CalculateCharge("XYZ1234", date);
 
@@ -141,7 +140,7 @@ namespace Decongestor.Tests.Business
                 },
                 TollEntries = new[]
                 {
-                    new TollEntry{ EnteredAtUtc = DateTime.Parse("03/09/2021 12:00:00")  }
+                    new TollEntry{ EnteredAtUtc = new(2021, 9, 3, 12, 0, 0) }
                 }
             };
 
@@ -152,7 +151,7 @@ namespace Decongestor.Tests.Business
             _dataAccessMock.Setup(m => m.GetVehicleWithTypeAndLastCharge(It.IsAny<string>())).Returns(mockVehicle);
 
             // Act
-            var date = DateTime.Parse("03/09/2021 12:30:00");
+            var date = new DateTime(2021, 9, 3, 12, 30, 0);
             var actual = _calculator.CalculateCharge("xyz", date);
 
             // Assert
@@ -172,7 +171,7 @@ namespace Decongestor.Tests.Business
                 },
                 TollEntries = new[]
                 {
-                    new TollEntry{ EnteredAtUtc = DateTime.Parse("03/09/2021 12:00:00")  }
+                    new TollEntry{ EnteredAtUtc = new DateTime(2021, 9, 3, 12, 0, 0) }
                 }
             };
 
@@ -185,7 +184,7 @@ namespace Decongestor.Tests.Business
             _dataAccessMock.Setup(m => m.GetTotalTollCharge(It.IsAny<string>(), It.IsAny<DateTime>())).Returns(60);
 
             // Act
-            var date = DateTime.Parse("03/09/2021 13:30:00");
+            var date = new DateTime(2021, 9, 3, 13, 30, 0);
             var actual = _calculator.CalculateCharge("xyz", date);
 
             // Assert
@@ -205,20 +204,20 @@ namespace Decongestor.Tests.Business
                 },
                 TollEntries = new[]
                 {
-                    new TollEntry{ EnteredAtUtc = DateTime.Parse("03/09/2021 12:00:00")  }
+                    new TollEntry{ EnteredAtUtc = new DateTime(2021, 9, 3, 12, 0, 0) }
                 }
             };
 
             _mockSettings.ReEntryExemptionPeriod = TimeSpan.FromHours(1);
             _mockSettings.DefaultDailyChargeCap = 60;
-            _mockSettings.DefaultTollCharges = new[] 
-            { 
-                new Configuration.TollCharge 
-                { 
+            _mockSettings.DefaultTollCharges = new[]
+            {
+                new Configuration.TollCharge
+                {
                     FromTimeOfDayInclusive =  TimeSpan.FromHours(13),
                     ToTimeOfDayExclusive = TimeSpan.FromHours(14),
                     Charge = 20
-                } 
+                }
             };
 
             ConfigureExemptDays();
@@ -227,11 +226,12 @@ namespace Decongestor.Tests.Business
             _dataAccessMock.Setup(m => m.GetTotalTollCharge(It.IsAny<string>(), It.IsAny<DateTime>())).Returns(45);
 
             // Act
-            var date = DateTime.Parse("03/09/2021 13:30:00");
+            var date = new DateTime(2021, 9, 3, 13, 30, 0);
             var actual = _calculator.CalculateCharge("xyz", date);
 
             // Assert
             Assert.AreEqual(15, actual.Charge, "Assertion on Charge failed.");
+
             Assert.IsTrue(actual.Remarks.Contains("to keep within daily charge cap of"), "Assertion on remarks failed");
         }
 
