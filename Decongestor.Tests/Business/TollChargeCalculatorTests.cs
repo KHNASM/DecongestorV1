@@ -126,7 +126,8 @@ namespace Decongestor.Tests.Business
             // Assert
             Assert.AreEqual(0, actual.Charge, "Assertion on Charge failed.");
             Assert.IsTrue(actual.Remarks.Contains("is an exempted Vehical Type"), "Assertion on remarks failed");
-        }// Exempted Vehicles, exempted vehicles have 0 daily charge cap
+        } 
+        // Exempted Vehicles, exempted vehicles have 0 daily charge cap
 
         [TestMethod]
         public void CalculateCharge_WhenVehicleReEntersWithinExemptedReEntryPeriod_ChargesZero()
