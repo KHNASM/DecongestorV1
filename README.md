@@ -1,4 +1,4 @@
-Decongester V.1, is a test solution for WinningTemp candidate test
+Decongester V.1, is a test solution for WinningTemp candidate test, the purpose for the code was to practice OOP and SOLID concepts.
 
 Test URL: https://github.com/winningtemp/candidate-test/tree/master/backend
 
